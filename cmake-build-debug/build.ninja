@@ -49,11 +49,11 @@ cmake_ninja_workdir = /Users/denisosipov/CLionProjects/yamp_labs/cmake-build-deb
 
 build cmake_object_order_depends_target_yamp_labs: phony || CMakeFiles/yamp_labs.dir
 
-build CMakeFiles/yamp_labs.dir/main.cpp.o: CXX_COMPILER__yamp_labs_Debug /Users/denisosipov/CLionProjects/yamp_labs/main.cpp || cmake_object_order_depends_target_yamp_labs
-  DEP_FILE = CMakeFiles/yamp_labs.dir/main.cpp.o.d
+build CMakeFiles/yamp_labs.dir/main/main.cpp.o: CXX_COMPILER__yamp_labs_Debug /Users/denisosipov/CLionProjects/yamp_labs/main/main.cpp || cmake_object_order_depends_target_yamp_labs
+  DEP_FILE = CMakeFiles/yamp_labs.dir/main/main.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fcolor-diagnostics -std=gnu++17
   OBJECT_DIR = CMakeFiles/yamp_labs.dir
-  OBJECT_FILE_DIR = CMakeFiles/yamp_labs.dir
+  OBJECT_FILE_DIR = CMakeFiles/yamp_labs.dir/main
 
 build CMakeFiles/yamp_labs.dir/hash_table/Hash_table.cpp.o: CXX_COMPILER__yamp_labs_Debug /Users/denisosipov/CLionProjects/yamp_labs/hash_table/Hash_table.cpp || cmake_object_order_depends_target_yamp_labs
   DEP_FILE = CMakeFiles/yamp_labs.dir/hash_table/Hash_table.cpp.o.d
@@ -67,11 +67,11 @@ build CMakeFiles/yamp_labs.dir/Node/Node.cpp.o: CXX_COMPILER__yamp_labs_Debug /U
   OBJECT_DIR = CMakeFiles/yamp_labs.dir
   OBJECT_FILE_DIR = CMakeFiles/yamp_labs.dir/Node
 
-build CMakeFiles/yamp_labs.dir/Strurcture_node/Structure_node.cpp.o: CXX_COMPILER__yamp_labs_Debug /Users/denisosipov/CLionProjects/yamp_labs/Strurcture_node/Structure_node.cpp || cmake_object_order_depends_target_yamp_labs
-  DEP_FILE = CMakeFiles/yamp_labs.dir/Strurcture_node/Structure_node.cpp.o.d
+build CMakeFiles/yamp_labs.dir/Token/Token.cpp.o: CXX_COMPILER__yamp_labs_Debug /Users/denisosipov/CLionProjects/yamp_labs/Token/Token.cpp || cmake_object_order_depends_target_yamp_labs
+  DEP_FILE = CMakeFiles/yamp_labs.dir/Token/Token.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fcolor-diagnostics -std=gnu++17
   OBJECT_DIR = CMakeFiles/yamp_labs.dir
-  OBJECT_FILE_DIR = CMakeFiles/yamp_labs.dir/Strurcture_node
+  OBJECT_FILE_DIR = CMakeFiles/yamp_labs.dir/Token
 
 
 # =============================================================================
@@ -81,7 +81,7 @@ build CMakeFiles/yamp_labs.dir/Strurcture_node/Structure_node.cpp.o: CXX_COMPILE
 #############################################
 # Link the executable yamp_labs
 
-build yamp_labs: CXX_EXECUTABLE_LINKER__yamp_labs_Debug CMakeFiles/yamp_labs.dir/main.cpp.o CMakeFiles/yamp_labs.dir/hash_table/Hash_table.cpp.o CMakeFiles/yamp_labs.dir/Node/Node.cpp.o CMakeFiles/yamp_labs.dir/Strurcture_node/Structure_node.cpp.o
+build yamp_labs: CXX_EXECUTABLE_LINKER__yamp_labs_Debug CMakeFiles/yamp_labs.dir/main/main.cpp.o CMakeFiles/yamp_labs.dir/hash_table/Hash_table.cpp.o CMakeFiles/yamp_labs.dir/Node/Node.cpp.o CMakeFiles/yamp_labs.dir/Token/Token.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk
   OBJECT_DIR = CMakeFiles/yamp_labs.dir
   POST_BUILD = :
