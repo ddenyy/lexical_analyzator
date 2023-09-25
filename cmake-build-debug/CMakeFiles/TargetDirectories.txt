@@ -1,0 +1,3 @@
+/Users/denisosipov/CLionProjects/yamp_labs/cmake-build-debug/CMakeFiles/yamp_labs.dir
+/Users/denisosipov/CLionProjects/yamp_labs/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/denisosipov/CLionProjects/yamp_labs/cmake-build-debug/CMakeFiles/rebuild_cache.dir
