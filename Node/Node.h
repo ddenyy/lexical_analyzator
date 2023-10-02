@@ -9,6 +9,11 @@
 #ifndef YAMP_LABS_NODE_H
 #define YAMP_LABS_NODE_H
 
+/*
+ * класс узла хеш таблицы.
+ * содержит в себе state - флаг был ли узел удален
+ * value Токен - {type_lexem, text_lexem}
+ */
 
 class Node {
 private:
@@ -23,13 +28,13 @@ public:
         Node(Token& _value): value(_value), state(true) {};
 
         // Конструктор по ключу и состоянию (удалён ли узел)
-        Node(const Token &value, bool state) : value(value), state(state) {};
+        Node(Token &value, bool state) : value(value), state(state) {};
 
-    Token &getValue() {
+    Token& getValue() {
         return value;
     }
 
-    void setValue(const Token &value) {
+    void setValue(Token &value) {
         Node::value = value;
     }
 

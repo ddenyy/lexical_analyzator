@@ -7,12 +7,9 @@
 
 Hash_table::Hash_table()
 {
-    buffer_size = DEFAULT_SIZE;
-    size = 0;
-    size_all_non_nullptr = 0;
-
-    arr.resize(buffer_size);
-    for (int i = 0; i < buffer_size; ++i) {
+    size = DEFAULT_SIZE;
+    arr.resize(size);
+    for (int i = 0; i < size; ++i) {
         arr[i] = nullptr;                             //заполняем nullptr - то есть если значение отсутствует,
     }                                                 // и никто раньше по этому адресу не обращался
 }
@@ -24,24 +21,64 @@ Hash_table::~Hash_table()
     arr.clear();
 }
 
+
+int Hash_table::hash_function(string s, int size_hash_table)
+{
+    int hash_result = 0;
+    int hash_coefficient = 57;
+    for (char i : s) {
+        hash_result = (hash_coefficient * hash_result + i) % size_hash_table;
+    }
+    hash_result = (hash_result * 2 + 1) % size_hash_table;
+    return hash_result;
+}
+
+
+bool Hash_table::Add(Token& value) {
+    // Проверяем, не нужно ли делать ре-хеширование
+    if (REHASH_SIZE <= (1.0*size / arr.size())) {
+        rehash();
+    }
+
+    int index = hash_function(value.getText(), arr.size());
+    // Ищем место, куда можно вставить элемент.
+    // Это должен быть либо пустой, либо удаленный узел
+    while (arr[index] != nullptr && !arr[index]->isState()) {
+        // Так как хеш-таблица не допускает повторов, то выходим, как только нашли такой же элемент
+        if (arr[index]->getValue().isEqual(value)) {
+            return false;
+        }
+        index = (index + 1) % arr.size();
+    }
+    size++;
+    // Вставка происходить по-разному: если это пустой узел, то просто создаем новый, а если это
+    // удаленный узел, то заменяем значение в нем и поднимаем флаг
+    if (arr[index] == nullptr) {
+        arr[index] = new Node(value, true);
+    } else {
+        arr[index]->setValue(value);
+        arr[index]->setState(true);
+    }
+    return true;
+}
+
+
 // изменение размера хэш таблицы
 void Hash_table::resize()
 {
-    int past_buffer_size = buffer_size;
-    buffer_size *= 2;
-    size_all_non_nullptr = 0;
+    int past_buffer_size = size;
     size = 0;
 
-    vector<ptr_node> arr2 = vector<ptr_node> (buffer_size, nullptr);
-    // по дефолту не только перекидывает значения которые были в массиве
-    // но ещё и размеры массивов тоже свапает
+    vector<ptr_node> arr2 = vector<ptr_node> (size*2, nullptr);
+    // По дефолту не только перекидывает, значения, которые были в массиве.
+    // Но ещё и размеры массивов тоже меняет
     swap(arr, arr2);
 
     for (int i = 0; i < past_buffer_size; ++i)
     {
         if (arr2[i] && arr2[i]->isState())
         {
-           // this->Add(arr2[i]->getValue()); // добавляем элементы в новый массив
+           this->Add(arr2[i]->getValue()); // добавляем элементы в новый массив
         }
 
     }
@@ -57,37 +94,37 @@ void Hash_table::resize()
 
 void Hash_table::rehash()
 {
-    size_all_non_nullptr = 0;
     size = 0;
-    vector<ptr_node> arr2(buffer_size, nullptr);
-    swap(arr, arr2);
+    vector<ptr_node> arr2(arr);
+    fill(all(arr), nullptr);
+    arr.resize(arr.size()*2, nullptr);
 
-    for (int i = 0; i < buffer_size; ++i)
+    for(auto i: arr2)
     {
-        if (arr2[i] && arr2[i]->isState())
-            Add(arr2[i]->getValue());
+        if (i != nullptr && i->isState())
+        {
+            Add(i->getValue());
+        }
     }
+
     // удаление предыдущего массива
     arr2.clear();
     arr2.resize(0);
 }
 
-int hash_function(string& s, int size_hash_table)
-{
-    int result = 0;
-    const int hash_coef = 57;
-
-}
 
 bool Hash_table::Find(Token& value)
 {
-//    int indx = hash_function()
+//    int index = hash_function()
+    return true;
 }
 
 
 
-const int Hash_table::getDefaultSize() {
-    return DEFAULT_SIZE;
+
+
+const int Hash_table::getSize() {
+    return size;
 }
 
 const double Hash_table::getRehashSize() {
