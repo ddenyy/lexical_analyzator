@@ -43,12 +43,16 @@ bool Hash_table::Add(Token& value) {
     int index = hash_function(value.getText(), arr.size());
     // Ищем место, куда можно вставить элемент.
     // Это должен быть либо пустой, либо удаленный узел
-    while (arr[index] != nullptr && !arr[index]->isState()) {
+
+    cout << arr[index] << ' ' << '\n';
+
+    while (arr[index] != nullptr && arr[index]->isState()) {
         // Так как хеш-таблица не допускает повторов, то выходим, как только нашли такой же элемент
         if (arr[index]->getValue().isEqual(value)) {
             return false;
         }
-        index = (index + 1) % arr.size();
+        index +=1;
+        index %= arr.size();
     }
     size++;
     // Вставка происходить по-разному: если это пустой узел, то просто создаем новый, а если это
@@ -120,7 +124,10 @@ bool Hash_table::Find(Token& value)
 }
 
 
+void print_table()
+{
 
+}
 
 
 const int Hash_table::getSize() {

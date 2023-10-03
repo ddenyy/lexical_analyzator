@@ -43,6 +43,8 @@ class Hash_table {
 
         const double getRehashSize();
 
+        void print_table();
+
 };
 
 

@@ -1,12 +1,13 @@
 #include "main.h"
 #include "../Test/Test.h"
+#include "../Token/Token.h"
 
 int main() {
 
     Hash_table Table;
 
     Token tmp_token("int");
-    Token second_tmp_token("intintint");
+    Token second_tmp_token("int");
 
     cout << tmp_token.getText() << '\n';
 
