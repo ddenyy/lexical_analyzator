@@ -14,18 +14,11 @@ Hash_table::Hash_table()
     }                                                 // и никто раньше по этому адресу не обращался
 }
 
-Hash_table::~Hash_table()
-{
-    for(auto& item: arr)
-        delete item;
-    arr.clear();
-}
 
-
-int Hash_table::hash_function(string s, int size_hash_table)
+size_t Hash_table::hash_function(string s, size_t size_hash_table)
 {
-    int hash_result = 0;
-    int hash_coefficient = 57;
+    size_t hash_result = 0;
+    size_t hash_coefficient = 57;
     for (char i : s) {
         hash_result = (hash_coefficient * hash_result + i) % size_hash_table;
     }
@@ -34,7 +27,7 @@ int Hash_table::hash_function(string s, int size_hash_table)
 }
 
 
-bool Hash_table::Add(Token& value) {
+bool Hash_table::Add(Token value) {
     // Проверяем, не нужно ли делать ре-хеширование
     if (REHASH_SIZE <= (1.0*size / arr.size())) {
         rehash();
@@ -43,8 +36,6 @@ bool Hash_table::Add(Token& value) {
     int index = hash_function(value.getText(), arr.size());
     // Ищем место, куда можно вставить элемент.
     // Это должен быть либо пустой, либо удаленный узел
-
-    cout << arr[index] << ' ' << '\n';
 
     while (arr[index] != nullptr && arr[index]->isState()) {
         // Так как хеш-таблица не допускает повторов, то выходим, как только нашли такой же элемент
@@ -116,24 +107,58 @@ void Hash_table::rehash()
     arr2.resize(0);
 }
 
-
-bool Hash_table::Find(Token& value)
+/**
+ * поиск токена с данным текстовым представлением;
+ * возвращаем это токен
+ * \param value - текстовое представление которое лежит в токене
+ * */
+Token Hash_table::Find(string& text)
 {
-//    int index = hash_function()
-    return true;
+    size_t index = hash_function(text, arr.size());
+
+    while(arr[index] != nullptr && arr[index]->getValue().getText() != text)
+    {
+        index= ( index + 1 ) % arr.size();
+    }
+
+    if (arr[index] != nullptr && arr[index]->getValue().getText() == text && !arr[index]->isState())
+    {
+        return arr[index]->getValue();
+    }
+
+    return {};
 }
 
 
-void print_table()
-{
 
+void Hash_table::print_table() {
+    for (int i = 0; i < arr.size(); i++) {
+        if (arr[i] == nullptr || !arr[i]->isState()) {
+            continue;
+        }
+        std::cout << "Key: " << i << "\tvalue: " << ' ' << arr[i]->getValue().print_type_token(arr[i]->getValue()) << '\n';
+    }
 }
 
 
-const int Hash_table::getSize() {
+int Hash_table::getSize() {
     return size;
 }
 
-const double Hash_table::getRehashSize() {
+double Hash_table::getRehashSize() {
     return REHASH_SIZE;
+}
+
+// Метод возвращает токен с данным текстовым представлением
+std::vector<std::pair<size_t, Token>> Hash_table::to_array() const {
+    std::vector<std::pair<size_t, Token>> res;
+    for (size_t i = 0; i < arr.size(); i++) {
+        // Добавляем только не пустые и не удаленные узлы
+        if (arr[i] == nullptr || arr[i]->isState()) {
+            continue;
+        }
+
+        res.emplace_back(i, arr[i]->getValue());
+    }
+    return res;
 }

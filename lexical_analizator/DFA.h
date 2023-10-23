@@ -6,6 +6,8 @@
 #define YAMP_LABS_DFA_H
 
 #include "../main/main.h"
+#include "../Token/Token.h"
+#include "../utils/Utils.h"
 
 class DFA {
     private:
@@ -17,7 +19,7 @@ class DFA {
             q_4  // пустое множество типо
         };
 
-        enum current_symbol_in_line {
+        enum transition {
             symbol_letter,
             symbol_digit,
             symbol_point,
@@ -28,16 +30,28 @@ class DFA {
 
         Table_states _table;
 
+
+
      /**
      * Метод совершает "шаг" автомата - из состояния по символу переходит в новое состояние.
      * \param from - состояние из которого делаем шаг
      * \param curr_symbol - по какому событию делаем переход
      * */
 
-     states function_step(states from, current_symbol_in_line curr_symbol);
+     states function_step(states from, transition curr_symbol);
 
+
+    transition get_transition(char s);
 
     public:
+
+        // конструктор по умолчанию
+        DFA();
+
+        // получаем тип токена по его текстовому представлению
+        // lex - текстовое представление токена
+        Token::Type_lexeme process(string& lex);
+
 };
 
 

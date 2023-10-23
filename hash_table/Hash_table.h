@@ -4,6 +4,7 @@
 #pragma once
 #include "../main/main.h"
 #include "../Node/Node.h"
+#include "../Token/Token.h"
 #ifndef YAMP_LABS_HASH_TABLE_H
 #define YAMP_LABS_HASH_TABLE_H
 
@@ -28,23 +29,24 @@ class Hash_table {
         Hash_table();
 
         // деструктор
-        ~Hash_table();
+        ~Hash_table() = default;
 
-        int hash_function(string s, int size_hash_table);
+        size_t hash_function(string s, size_t size_hash_table);
 
         void resize();
 
         void rehash();
 
-        bool Add(Token& value);
-        bool Find(Token& value);
+        bool Add(Token value);
+        Token Find(string& value);
 
-        const int getSize();
+        int getSize();
 
-        const double getRehashSize();
+        double getRehashSize();
 
         void print_table();
 
+    vector<pair<size_t, Token>> to_array() const;
 };
 
 
