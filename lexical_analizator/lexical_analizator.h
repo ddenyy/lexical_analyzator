@@ -44,17 +44,17 @@ private:
      * Метод проверяет, является ли слово ключевым (это слова int, char, return)
      * \param s - слово для проверки
      * */
-    bool is_keyword(std::string& s);
+    bool is_keyword(string& s);
     /**
      * Метод возвращает тип токена разделителя
      * \param s - слово для определения типа
      * */
-    Token::Type_lexeme get_separator_type(std::string& s);
+    Token::Type_lexeme get_separator_type(string& s);
     /**
      * Метод возвращает тип ключевого слова
      * \param s - слово для определения типа
      * */
-    Token::Type_lexeme get_keyword_type(std::string& s);
+    Token::Type_lexeme get_keyword_type(string& s);
     /**
      * Метод получает следующее по тексту слово
      * */

@@ -5,11 +5,12 @@
 #include <utility>
 
 #include "../main/main.h"
+#include "../lexical_item/lexical_item.h"
 #ifndef YAMP_LABS_TOKEN_H
 #define YAMP_LABS_TOKEN_H
 
 
-class Token {
+class Token : public lexical_item {
 public:
     // типы лексем
 
@@ -20,6 +21,7 @@ public:
         SUM, MINUS,
         MULTIPLY, DIVIDE, MOD,
         LEFT_BRACKET, RIGHT_BRACKET,
+        SIMPLE_STRING, NUMBER,
         EQUALS, SEMICOLON, LEFT_FIGURE_BRACKET, RIGHT_FIGURE_BRACKET, COMMA,
     };
 
@@ -29,6 +31,8 @@ public:
 
     // конструктор по типу токена и его текстового представления
     Token(Type_lexeme &type, string text);
+
+//    Token(const Type_lexeme& type, std::string  text) : type_lexeme(type), text_lexeme(std::move(text)), type_variable() {};
 
     Token(Type_lexeme type, string text);
 
@@ -69,6 +73,8 @@ public:
     string getText();
 
     bool isEqual(Token& other);
+
+    string class_name() const override { return {"token"}; }
 
 private:
     string text_lexeme;

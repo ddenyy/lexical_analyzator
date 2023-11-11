@@ -7,7 +7,7 @@
 #include "DFA.h"
 
 lexical_analyzer::lexical_analyzer(string file_name) {
-    std::ifstream fin(file_name);
+    ifstream fin(file_name);
     _input << fin.rdbuf();
     fin.close();
     _pos._data = std::vector<int>(1);
@@ -30,12 +30,12 @@ bool lexical_analyzer::is_separators(char s) {
     return std::find(spr_sym.begin(), spr_sym.end(), s) != spr_sym.end();
 }
 
-bool lexical_analyzer::is_separators(std::string& s) {
+bool lexical_analyzer::is_separators(string& s) {
     vector<string> spr_sym = { "+", "-", "(", ")", "{", "}", ",", ";", "=", "/", "%", "*" };
     return std::find(spr_sym.begin(), spr_sym.end(), s) != spr_sym.end();
 }
 
-bool lexical_analyzer::is_keyword(std::string& s) {
+bool lexical_analyzer::is_keyword(string& s) {
     bool flag = false;
 
     if (s == "int")
@@ -53,7 +53,7 @@ bool lexical_analyzer::is_keyword(std::string& s) {
     return flag;
 }
 
-Token::Type_lexeme lexical_analyzer::get_separator_type(std::string& s) {
+Token::Type_lexeme lexical_analyzer::get_separator_type(string& s) {
     if (s == "+") {
         return Token::SUM;
     } else if (s == "-") {
@@ -82,7 +82,7 @@ Token::Type_lexeme lexical_analyzer::get_separator_type(std::string& s) {
     return Token::UNDEFINED;
 }
 
-Token::Type_lexeme lexical_analyzer::get_keyword_type(std::string& s) {
+Token::Type_lexeme lexical_analyzer::get_keyword_type(string& s) {
     if (s == "return") {
         return Token::RETURN;
     } else if (s == "int") {
