@@ -1,16 +1,8 @@
 #include "parser.h"
 
-/*
- * В функциях часто встречается конструкция вида:
- * position curr_pos = _tokens.position();
- * token curr = _tokens.get_next_token();
- * Когда мы читаем следующий токен, нам необходимо запомнить позицию то его чтения, чтобы в случае
- * ошибки вывести ее
- * */
-
 void parser::check_lexical_error(Token& curr) {
     if (curr.get_type() == Token::UNDEFINED && ! curr.get_text().empty()) {
-        std::cout << "Unknown lexeme " << curr.get_text() << '\n';
+        std::cout << "UNDEFINED lexeme " << curr.get_text() << '\n';
     }
 }
 
@@ -109,7 +101,7 @@ bool parser::begin(parse_tree& begin_tree) {
         std::cout << "Error int the function description: not find (\n";
         return false;
     }
-    // Отслеживаем наличие )
+
     curr_pos = _tokens.position();
     curr = _tokens.get_next_token();
     if (curr.get_type() != Token::RIGHT_BRACKET) {
@@ -118,13 +110,13 @@ bool parser::begin(parse_tree& begin_tree) {
         std::cout << "Error int the function description: not find )\n";
         return false;
     }
-    // Отслеживаем наличие {
+
     curr_pos = _tokens.position();
     curr = _tokens.get_next_token();
     if (curr.get_type() != Token::LEFT_FIGURE_BRACKET) {
         check_lexical_error(curr);
         std::cout << curr_pos._data.size() << ':' << *curr_pos._data.rbegin() << ' ';
-        std::cout << "Error int the function description: not find {\n";
+        std::cout << "Error int||float the function description: not find {\n";
         return false;
     }
     return true;
@@ -306,13 +298,13 @@ bool parser::small_operators(parse_tree& small_operators_tree) {
         // Добавим идентификатор
         small_operators_tree.add_token(terminal::ID, id_token);
         // Создадим дерево разбора для терминала expr
-        parse_tree num_expr_tree(terminal::EXPR);
+        parse_tree expr_tree(terminal::EXPR);
         // Вызываем функцию разбора Num expr
-        if (! num_expr(num_expr_tree)) {
+        if (! expr(expr_tree)) {
             return false;
         }
-        // Если все хорошо, что добавляем дерево разбора Num expr в дерево разбора Op
-        small_operators_tree.insert_tree(terminal::EXPR, num_expr_tree);
+        // Если все хорошо, что добавляем дерево разбора expr в дерево разбора Op
+        small_operators_tree.insert_tree(terminal::EXPR, expr_tree);
 
     } else {
         check_lexical_error(curr);
@@ -331,113 +323,6 @@ bool parser::small_operators(parse_tree& small_operators_tree) {
     }
     return true;
 }
-
-bool parser::num_expr(parse_tree& num_expr_tree) {
-    // Создаем дерево разбора для Simple num expr
-    parse_tree simple_num_expr_tree(terminal::SIMPLE_NUM_EXPR);
-    // Сначала нужно разобрать вывод терминала Simple num expr так как он идет в начале любой
-    // продукции для Num expr
-    if (! simple_num_expr(simple_num_expr_tree)) {
-        return false;
-    }
-    // Далее нужно понять, какую продукцию следует применить
-    Token curr = _tokens.get_next_token();
-    // Если мы прочитали не арифметическую операцию, значит нужно применить первую продукцию Num expr (term)
-    if (curr.get_type() != Token::SUM && curr.get_type() != Token::MINUS && curr.get_type() != Token::MULTIPLY
-    && curr.get_type() != Token::DIVIDE && curr.get_type() != Token::MOD) {
-        // Вернем токен для корректной работы дальше
-        _tokens.return_last_word();
-        // Добавим в дерево разбора Num expr дерево разбора Simple num expr
-        num_expr_tree.add_tree(terminal::NUM_EXPR, simple_num_expr_tree);
-        return true;
-    }
-    // Если мы прочитали сумму то добавляем вторую продукцию
-    if (curr.get_type() == Token::SUM) {
-        num_expr_tree.add_product(terminal::NUM_EXPR, parse_tree::NUM_EXPR_2);
-        // Добавим в дерево разбора Num expr дерево разбора Simple num expr
-        num_expr_tree.insert_tree(terminal::SIMPLE_NUM_EXPR, simple_num_expr_tree);
-        // Если мы прочитали минус, то добавляем третью продукцию
-    } else if (curr.get_type() == Token::MINUS) {
-        num_expr_tree.add_product(terminal::NUM_EXPR, parse_tree::NUM_EXPR_3);
-        // Добавим в дерево разбора Num expr дерево разбора Simple num expr
-        num_expr_tree.insert_tree(terminal::SIMPLE_NUM_EXPR, simple_num_expr_tree);
-    }
-    // Так как был прочитан плюс или минус, то дальше должен идти Num expr, вызываем функцию разбора
-    // Num expr
-    return num_expr(num_expr_tree);
-}
-
-bool parser::simple_num_expr(parse_tree& simple_num_expr_tree) {
-    // Проверяем наличие открывающей скобки, если она есть - это третья продукция
-    position curr_pos = _tokens.position();
-    Token curr = _tokens.get_next_token();
-    if (curr.get_type() == Token::LEFT_BRACKET) {
-        // Добавляем третью продукцию в дерево и создаем дерево разбора для Num expr
-        simple_num_expr_tree.add_product(terminal::SIMPLE_NUM_EXPR, parse_tree::SIMPLE_NUM_EXPR_3);
-        parse_tree num_expr_tree(terminal::NUM_EXPR);
-        // Вызываем разбор Num expr
-        if (! num_expr(num_expr_tree)) {
-            return false;
-        }
-        // Если все хорошо, то добавляем дерево Num expr в дерево Simple num expr
-        simple_num_expr_tree.insert_tree(terminal::NUM_EXPR, num_expr_tree);
-        // Проверяем наличие закрывающей скобки
-        curr_pos = _tokens.position();
-        curr = _tokens.get_next_token();
-        if (curr.get_type() != Token::RIGHT_BRACKET) {
-            check_lexical_error(curr);
-            std::cout << curr_pos._data.size() << ':' << *curr_pos._data.rbegin() << ' ';
-            std::cout << "Error in simple number expression: not find )\n";
-            return false;
-        }
-        return true;
-    }
-    // Другие две продукции начинаются либо с числа, либо с идентификатора
-    if (curr.get_type() != Token::ID && curr.get_type() != Token::INT_NUMBER && curr.get_type() != Token::INT_NUMBER ) {
-        check_lexical_error(curr);
-        std::cout << curr_pos._data.size() << ':' << *curr_pos._data.rbegin() << ' ';
-        std::cout << "Error in simple number expression: " << curr.get_text()
-                  << " must be a number or a variable\n";
-        return false;
-    }
-    // Если все хорошо, то в зависимости от прочитанного токена добавляем нужную продукцию
-    if (curr.get_type() == Token::ID) {
-        simple_num_expr_tree.add_product(terminal::SIMPLE_NUM_EXPR, parse_tree::SIMPLE_NUM_EXPR_1);
-        simple_num_expr_tree.add_token(terminal::ID, curr);
-    } else if (curr.get_type() == Token::INT_NUMBER || curr.get_type() == Token::FLOAT_NUMBER) {
-        simple_num_expr_tree.add_product(terminal::SIMPLE_NUM_EXPR, parse_tree::SIMPLE_NUM_EXPR_2);
-        simple_num_expr_tree.add_token(terminal::CONST, curr);
-    }
-    return true;
-}
-
-//bool parser::string_expr(parse_tree& string_expr_tree) {
-//    // Обе продукции для String expr начинаются с Simple string
-//    Token curr = _tokens.get_next_token();
-////    if (curr.get_type() != Token::) {
-////        position curr_pos = _tokens.position();
-////        std::cout << curr_pos._data.size() << ':' << *curr_pos._data.rbegin() - curr.get_text().size() << ' ';
-////        std::cout << "Error in number expression: " << curr.get_text() << " must be a string expression\n";
-////        return false;
-////    }
-//    // Запомним прочитанный токен, так как сначала нужно выбрать продукцию
-//    Token prev = curr;
-//    curr = _tokens.get_next_token();
-//    // Если прочитали не плюс, значит это первая продукция
-//    if (curr.get_type() != Token::SUM) {
-//        // Вернем токен для корректной работы функций разбора дальше
-//        _tokens.return_last_word();
-//        // Добавим первую продукцию и сохраненный токен
-//        string_expr_tree.add_product(terminal::STRING_EXPR, parse_tree::STRING_EXPR_1);
-//        string_expr_tree.add_token(terminal::SIMPLE_STRING_EXPR, prev);
-//        return true;
-//    }
-//    // Если мы прочитали токен, то это вторая продукция. Добавим нужную продукцию с токеном и
-//    // вызовем разбор String expr
-//    string_expr_tree.add_product(terminal::STRING_EXPR, parse_tree::STRING_EXPR_2);
-//    string_expr_tree.add_token(terminal::SIMPLE_STRING_EXPR, prev);
-//    return string_expr(string_expr_tree);
-//}
 
 bool parser::end(parse_tree& end_tree) {
     // Добавим главную продукцию
@@ -482,3 +367,122 @@ bool parser::end(parse_tree& end_tree) {
     }
     return true;
 }
+
+bool parser::simple_expr(parse_tree& simple_expr_tree) {
+    // Проверяем наличие открывающей скобки, если она есть - это третья продукция
+    position curr_pos = _tokens.position();
+    Token curr = _tokens.get_next_token();
+    if (curr.get_type() == Token::LEFT_BRACKET) {
+        // Добавляем третью продукцию в дерево и создаем дерево разбора для EXPR
+        simple_expr_tree.add_product(terminal::SIMPLE_EXPR, parse_tree::SIMPLE_EXPR_3);
+        parse_tree expr_tree(terminal::EXPR);
+        // Вызываем разбор expr
+        if (! expr(expr_tree)) {
+            return false;
+        }
+        // Если все хорошо, то добавляем дерево expr в дерево SimpleExpr
+        simple_expr_tree.insert_tree(terminal::EXPR, expr_tree);
+        // Проверяем наличие закрывающей скобки
+        curr_pos = _tokens.position();
+        curr = _tokens.get_next_token();
+        if (curr.get_type() != Token::RIGHT_BRACKET) {
+            check_lexical_error(curr);
+            std::cout << curr_pos._data.size() << ':' << *curr_pos._data.rbegin() << ' ';
+            std::cout << "Error in simple number expression: not find )\n";
+            return false;
+        }
+        return true;
+    }
+    // Другие две продукции начинаются либо с числа, либо с идентификатора
+    if (curr.get_type() != Token::ID && curr.get_type() != Token::INT_NUMBER && curr.get_type() != Token::FLOAT_NUMBER ) {
+        check_lexical_error(curr);
+        std::cout << curr_pos._data.size() << ':' << *curr_pos._data.rbegin() << ' ';
+        std::cout << "Error in simple expression: " << curr.get_text()
+                  << " must be a number or a variable\n";
+        return false;
+    }
+    // Если все хорошо, то в зависимости от прочитанного токена добавляем нужную продукцию
+    if (curr.get_type() == Token::ID) {
+        simple_expr_tree.add_product(terminal::SIMPLE_EXPR, parse_tree::SIMPLE_EXPR_1);
+        simple_expr_tree.add_token(terminal::ID, curr);
+    } else if (curr.get_type() == Token::INT_NUMBER || curr.get_type() == Token::FLOAT_NUMBER) {
+        simple_expr_tree.add_product(terminal::SIMPLE_EXPR, parse_tree::SIMPLE_EXPR_2);
+        simple_expr_tree.add_token(terminal::CONST, curr);
+    }
+    return true;
+}
+
+bool parser::expr(parse_tree& expr_tree) {
+    // Создаем дерево разбора для term
+    parse_tree term_tree(terminal::TERM);
+    // Сначала нужно разобрать вывод терминала term так как он идет в начале любой
+    // продукции для expr
+    if (! term(term_tree)) {
+        return false;
+    }
+    // Далее нужно понять, какую продукцию следует применить
+    Token curr = _tokens.get_next_token();
+    // Если мы прочитали не арифметическую операцию, значит нужно применить первую продукцию: term
+    if (curr.get_type() != Token::SUM && curr.get_type() != Token::MINUS) {
+        // Вернем токен для корректной работы дальше
+        _tokens.return_last_word();
+        // Добавим в дерево разбора expr дерево разбора term
+        expr_tree.add_tree(terminal::EXPR, term_tree);
+        return true;
+    }
+    // Если мы прочитали сумму, то добавляем вторую продукцию
+    if (curr.get_type() == Token::SUM) {
+        expr_tree.add_product(terminal::EXPR, parse_tree::EXPR_2);
+        // Добавим в дерево разбора expr дерево разбора term
+        expr_tree.insert_tree(terminal::TERM, term_tree);
+        // Если мы прочитали минус, то добавляем третью продукцию
+    } else if (curr.get_type() == Token::MINUS) {
+        expr_tree.add_product(terminal::EXPR, parse_tree::EXPR_3);
+        // Добавим в дерево разбора expr дерево разбора term
+        expr_tree.insert_tree(terminal::TERM, term_tree);
+    }
+    // Так как был прочитан плюс или минус, то дальше должен идти expr, вызываем функцию разбора
+    // expr
+    return expr(expr_tree);
+}
+
+
+bool parser::term(parse_tree& term_tree) {
+    // Создаем дерево разбора для SimpleExpr
+    parse_tree simple_expr_tree(terminal::SIMPLE_EXPR);
+    // Сначала нужно разобрать вывод терминала SimpleExpr так как он идет в начале любой
+    // продукции для Term
+    if (! simple_expr(simple_expr_tree)) {
+        return false;
+    }
+
+    // Далее нужно понять, какую продукцию следует применить
+    Token curr = _tokens.get_next_token();
+    // Если мы прочитали не арифметическую операцию, значит нужно применить первую продукцию simpleExpr
+    if (curr.get_type() != Token::MULTIPLY && curr.get_type() != Token::DIVIDE && curr.get_type() != Token::MOD) {
+        // Вернем токен для корректной работы дальше
+        _tokens.return_last_word();
+        // Добавим в дерево разбора Term дерево разбора SimpleExpr
+        term_tree.add_tree(terminal::TERM, simple_expr_tree);
+        return true;
+    }
+    // Если мы прочитали умножение, то добавляем вторую продукцию
+    if (curr.get_type() == Token::MULTIPLY) {
+        term_tree.add_product(terminal::TERM, parse_tree::TERM_1);
+        // Добавим в дерево разбора term_tree дерево разбора SimpleExpr
+        term_tree.insert_tree(terminal::SIMPLE_EXPR, simple_expr_tree);
+        // Если мы прочитали деление, то добавляем третью продукцию
+    } else if (curr.get_type() == Token::DIVIDE) {
+        term_tree.add_product(terminal::TERM, parse_tree::TERM_2);
+        // Добавим в дерево разбора term дерево разбора Simple expr
+        term_tree.insert_tree(terminal::SIMPLE_EXPR, simple_expr_tree);
+    } else if (curr.get_type() == Token::MOD) {
+        term_tree.add_product(terminal::TERM, parse_tree::TERM_3);
+        // Добавим в дерево разбора term дерево разбора Simple expr
+        term_tree.insert_tree(terminal::SIMPLE_EXPR, simple_expr_tree);
+    }
+    // Так как был прочитан плюс или минус, то дальше должен идти Num expr, вызываем функцию разбора
+    //  term
+
+    return term(term_tree);
+};

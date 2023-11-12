@@ -17,12 +17,9 @@ public:
         DESCRIPTION, DESCR,
         TYPE, VAR_LIST,
         OPERATORS, OP,
-        NUM_EXPR, SIMPLE_NUM_EXPR,
-        STRING_EXPR, SIMPLE_STRING_EXPR,
         ID, CONST,
-
         TERM, EXPR,
-        LET_NUM,INT_NUMBER,FLOAT_NUMBER
+        LET_NUM,INT_NUMBER,FLOAT_NUMBER, SIMPLE_EXPR
     };
     /**
      * Конструктор по умолчанию. Терминал инициализируется типом FUNCTION

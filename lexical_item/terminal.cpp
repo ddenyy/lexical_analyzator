@@ -36,23 +36,29 @@ std::ostream& operator<<(std::ostream& out, const terminal& v) {
         case terminal::OP:
             out << "Op";
             return out;
-        case terminal::NUM_EXPR:
-            out << "Expr";
-            return out;
-        case terminal::SIMPLE_NUM_EXPR:
-            out << "Simple num expr";
-            return out;
-        case terminal::STRING_EXPR:
-            out << "String expr";
-            return out;
-        case terminal::SIMPLE_STRING_EXPR:
-            out << "Simple string expr";
-            return out;
         case terminal::ID:
             out << "Id";
             return out;
         case terminal::CONST:
             out << "Const";
+            return out;
+        case terminal::TERM:
+            out << "Term";
+            return out;
+        case terminal::EXPR:
+            out << "Expr";
+            return out;
+        case terminal::LET_NUM:
+            out << "Let num";
+            return out;
+        case terminal::INT_NUMBER:
+            out << "int number";
+            return out;
+        case terminal::FLOAT_NUMBER:
+            out << "float number";
+            return out;
+        case terminal::SIMPLE_EXPR:
+            out << "Simple expr";
             return out;
     }
 }

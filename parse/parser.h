@@ -66,6 +66,21 @@ private:
      * \return true если продукция корректно разобрана, false если нашлись ошибки
      * */
     bool end(parse_tree& end_tree);
+    /**
+     * Метод разбирает продукцию Expr
+     * \return true если продукция корректно разобрана, false если нашлись ошибки
+     * */
+    bool expr(parse_tree& expr_tree);
+    /**
+     * Метод разбирает продукцию Term
+     * \return true если продукция корректно разобрана, false если нашлись ошибки
+     * */
+    bool term(parse_tree& term_tree);
+    /**
+     * Метод разбирает продукцию simple_expr
+     * \return true если продукция корректно разобрана, false если нашлись ошибки
+     * */
+    bool simple_expr(parse_tree& simple_expr_tree);
 
 public:
     /**
@@ -73,10 +88,7 @@ public:
      * \param out - поток для печати дерева
      * */
     void print_parse_tree(std::ostream& out) { _parse_tree.print(out); }
-    /**
-     * Метод возвращает дерево разбора
-     * */
-    parse_tree get_parse_tree() const { return _parse_tree; }
+
     /**
      * Метод возвращает хеш-таблицу с токенами
      * */
