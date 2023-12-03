@@ -46,6 +46,8 @@ class Hash_table {
 
         void print_table();
 
+        void set_type(string& text, string& var_type);
+
     vector<pair<size_t, Token>> to_array() const;
 };
 

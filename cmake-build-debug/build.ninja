@@ -109,6 +109,12 @@ build CMakeFiles/yamp_labs.dir/parse/parser.cpp.o: CXX_COMPILER__yamp_labs_Debug
   OBJECT_DIR = CMakeFiles/yamp_labs.dir
   OBJECT_FILE_DIR = CMakeFiles/yamp_labs.dir/parse
 
+build CMakeFiles/yamp_labs.dir/semantic/semantic.cpp.o: CXX_COMPILER__yamp_labs_Debug /Users/denisosipov/CLionProjects/yamp_labs/semantic/semantic.cpp || cmake_object_order_depends_target_yamp_labs
+  DEP_FILE = CMakeFiles/yamp_labs.dir/semantic/semantic.cpp.o.d
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fcolor-diagnostics -std=gnu++17
+  OBJECT_DIR = CMakeFiles/yamp_labs.dir
+  OBJECT_FILE_DIR = CMakeFiles/yamp_labs.dir/semantic
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target yamp_labs
@@ -117,7 +123,7 @@ build CMakeFiles/yamp_labs.dir/parse/parser.cpp.o: CXX_COMPILER__yamp_labs_Debug
 #############################################
 # Link the executable yamp_labs
 
-build yamp_labs: CXX_EXECUTABLE_LINKER__yamp_labs_Debug CMakeFiles/yamp_labs.dir/main/main.cpp.o CMakeFiles/yamp_labs.dir/hash_table/Hash_table.cpp.o CMakeFiles/yamp_labs.dir/Node/Node.cpp.o CMakeFiles/yamp_labs.dir/Token/Token.cpp.o CMakeFiles/yamp_labs.dir/Test/Test.cpp.o CMakeFiles/yamp_labs.dir/lexical_analizator/DFA.cpp.o CMakeFiles/yamp_labs.dir/lexical_analizator/lexical_analizator.cpp.o CMakeFiles/yamp_labs.dir/parse_tree/parse_tree.cpp.o CMakeFiles/yamp_labs.dir/lexical_item/terminal.cpp.o CMakeFiles/yamp_labs.dir/parse/parser.cpp.o
+build yamp_labs: CXX_EXECUTABLE_LINKER__yamp_labs_Debug CMakeFiles/yamp_labs.dir/main/main.cpp.o CMakeFiles/yamp_labs.dir/hash_table/Hash_table.cpp.o CMakeFiles/yamp_labs.dir/Node/Node.cpp.o CMakeFiles/yamp_labs.dir/Token/Token.cpp.o CMakeFiles/yamp_labs.dir/Test/Test.cpp.o CMakeFiles/yamp_labs.dir/lexical_analizator/DFA.cpp.o CMakeFiles/yamp_labs.dir/lexical_analizator/lexical_analizator.cpp.o CMakeFiles/yamp_labs.dir/parse_tree/parse_tree.cpp.o CMakeFiles/yamp_labs.dir/lexical_item/terminal.cpp.o CMakeFiles/yamp_labs.dir/parse/parser.cpp.o CMakeFiles/yamp_labs.dir/semantic/semantic.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk
   OBJECT_DIR = CMakeFiles/yamp_labs.dir
   POST_BUILD = :

@@ -89,6 +89,9 @@ public:
      * */
     void print_parse_tree(std::ostream& out) { _parse_tree.print(out); }
 
+    /** Метод возвращает дерево разбора **/
+    parse_tree get_parse_tree() const { return _parse_tree; }
+
     /**
      * Метод возвращает хеш-таблицу с токенами
      * */

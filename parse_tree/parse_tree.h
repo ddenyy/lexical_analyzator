@@ -27,7 +27,7 @@ public:
      * Конструктор по умолчанию
      * Вектор с детьми будет создан пустым
      * */
-    tree_node() : _value{nullptr}, _children{std::vector<std::shared_ptr<tree_node>>()} {}
+    tree_node() : _value{nullptr}, _children{std::vector<std::shared_ptr<tree_node>>()}, _rpn{} {}
 
     /**
      * Конструктор по терминалу
@@ -70,10 +70,14 @@ public:
 
     // Класс дерева объявлен дружеским для доступа к полям узла
     friend class parse_tree;
+    // Класс семантического анализа объявлен дружественным, чтобы легче реализовать обход дерева
+    friend class semantic;
 
+    string _rpn;
 private:
     ptr_lexi _value;
     std::vector<std::shared_ptr<tree_node>> _children;
+
 };
 
 using ptree_node = shared_ptr<tree_node>;
@@ -152,6 +156,7 @@ public:
      * */
     void add_product(const terminal& to_add, const type_product& product) {
         add_product(to_add, product, _root); }
+
 
     // Класс семантического анализа объявлен дружественным, чтобы легче реализовать обход дерева
     friend class semantic;
@@ -267,6 +272,7 @@ private:
     void push_product_item_simple_expr_2(vector<shared_ptr<tree_node>> &children, parse_tree::type_product product);
 
     void push_product_item_simple_expr_3(vector<shared_ptr<tree_node>> &children, parse_tree::type_product product);
+
 };
 
 

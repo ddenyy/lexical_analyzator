@@ -76,6 +76,14 @@ public:
 
     string class_name() const override { return {"token"}; }
 
+    void set_var_type(string& var_type) { type_variable = var_type; };
+
+    string var_type() const { return type_variable; }
+
+    bool operator==(const Token& v) const& {
+        return type_lexeme == v.type_lexeme && text_lexeme == v.text_lexeme && type_variable == v.type_variable;
+    }
+
 private:
     string text_lexeme;
     Type_lexeme type_lexeme;

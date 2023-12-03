@@ -16,13 +16,26 @@ Token::Token()
 Token::Token(Type_lexeme& type, string text)
 {
     this->type_lexeme = type;
-    this->text_lexeme = text;
+    this->text_lexeme = string();
+    this->text_lexeme += text;
+    type_variable = string();
+
+    if (this->type_lexeme = Token::INT_NUMBER)
+    {
+        this->type_variable = "int";
+    }
+    if (this->type_lexeme = Token::FLOAT_NUMBER)
+    {
+        this->type_variable = "float";
+    }
 }
 
 Token::Token(Type_lexeme type, string text)
 {
     this->type_lexeme = type;
-    this->text_lexeme = text;
+    this->text_lexeme = string();
+    this->text_lexeme += text;
+    type_variable = string();
 }
 
 Token::Token(string text) {

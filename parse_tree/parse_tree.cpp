@@ -8,7 +8,7 @@
 
 tree_node::tree_node(const tree_node& v) {
     _children = std::vector<std::shared_ptr<tree_node>>(v._children);
-
+    _rpn = v._rpn;
     if (v._value == nullptr) {
         _value = nullptr;
         return;

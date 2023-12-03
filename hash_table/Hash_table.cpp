@@ -121,7 +121,7 @@ Token Hash_table::Find(string& text)
         index= ( index + 1 ) % arr.size();
     }
 
-    if (arr[index] != nullptr && arr[index]->getValue().getText() == text && !arr[index]->isState())
+    if (arr[index] != nullptr && arr[index]->getValue().getText() == text && arr[index]->isState())
     {
         return arr[index]->getValue();
     }
@@ -147,6 +147,21 @@ int Hash_table::getSize() {
 
 double Hash_table::getRehashSize() {
     return REHASH_SIZE;
+}
+
+void Hash_table::set_type(string& text, string& var_type) {
+    size_t idx = hash_function(text, arr.size());
+    // Идем по таблице пока не упремся либо в пустой узел, либо в узел текстовое представление
+    // которого совпадает с искомым текстовым представлением
+    while (arr[idx] != nullptr && arr[idx]->getValue().get_text() != text) {
+        idx = (idx + 1) % arr.size();
+    }
+    // Меняем токен только в том случае, если мы нашли не пустой и не удаленный узел,
+    // текстовое представление токена которого равно искомому текстовому представлению
+
+    if (arr[idx] != nullptr && arr[idx]->getValue().get_text() == text &&  arr[idx]->isState()) {
+        arr[idx]->getValue().set_var_type(var_type);
+    }
 }
 
 // Метод возвращает токен с данным текстовым представлением
