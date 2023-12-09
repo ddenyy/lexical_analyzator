@@ -1,0 +1,62 @@
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: /Users/denisosipov/CLionProjects/yamp_labs/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-3WAzPA
+
+Run Build Command(s):/Applications/CLion.app/Contents/bin/ninja/mac/ninja cmTC_f9ba4 && [1/2] Building C object CMakeFiles/cmTC_f9ba4.dir/CMakeCCompilerABI.c.o
+FAILED: CMakeFiles/cmTC_f9ba4.dir/CMakeCCompilerABI.c.o 
+/usr/bin/cc   -arch arm64 -o CMakeFiles/cmTC_f9ba4.dir/CMakeCCompilerABI.c.o -c /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCCompilerABI.c
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+ninja: build stopped: subcommand failed.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: /Users/denisosipov/CLionProjects/yamp_labs/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-sq4VV9
+
+Run Build Command(s):/Applications/CLion.app/Contents/bin/ninja/mac/ninja cmTC_ba99a && [1/2] Building C object CMakeFiles/cmTC_ba99a.dir/testCCompiler.c.o
+FAILED: CMakeFiles/cmTC_ba99a.dir/testCCompiler.c.o 
+/usr/bin/cc   -arch arm64 -o CMakeFiles/cmTC_ba99a.dir/testCCompiler.c.o -c /Users/denisosipov/CLionProjects/yamp_labs/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-sq4VV9/testCCompiler.c
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+ninja: build stopped: subcommand failed.
+
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: /Users/denisosipov/CLionProjects/yamp_labs/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-PXuDna
+
+Run Build Command(s):/Applications/CLion.app/Contents/bin/ninja/mac/ninja cmTC_647a6 && [1/2] Building C object CMakeFiles/cmTC_647a6.dir/CMakeCCompilerABI.c.o
+FAILED: CMakeFiles/cmTC_647a6.dir/CMakeCCompilerABI.c.o 
+/usr/bin/cc   -arch arm64 -o CMakeFiles/cmTC_647a6.dir/CMakeCCompilerABI.c.o -c /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.25/Modules/CMakeCCompilerABI.c
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+ninja: build stopped: subcommand failed.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: /Users/denisosipov/CLionProjects/yamp_labs/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-PrNIY7
+
+Run Build Command(s):/Applications/CLion.app/Contents/bin/ninja/mac/ninja cmTC_b8728 && [1/2] Building C object CMakeFiles/cmTC_b8728.dir/testCCompiler.c.o
+FAILED: CMakeFiles/cmTC_b8728.dir/testCCompiler.c.o 
+/usr/bin/cc   -arch arm64 -o CMakeFiles/cmTC_b8728.dir/testCCompiler.c.o -c /Users/denisosipov/CLionProjects/yamp_labs/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-PrNIY7/testCCompiler.c
+You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.
+ninja: build stopped: subcommand failed.
+
+
+

@@ -172,6 +172,19 @@ void semantic::feel_term(std::shared_ptr<tree_node>& curr_term, std::string& che
     }
     auto oper = std::dynamic_pointer_cast<Token>(curr_term->_children[1]->_value);
     feel_term(curr_term->_children[2], checker);
+    // проверка на операцию % от числа типа float
+    if (oper->get_type() == Token::MOD)
+    {
+        std::shared_ptr<Token> type_fist_operand;
+        type_fist_operand = std::dynamic_pointer_cast<Token>(curr_term->_children[0]->_children[0]->_children[0]->_value);
+        if (type_fist_operand->get_type() == Token::FLOAT_NUMBER)
+        {
+            string temp = type_fist_operand->get_text();
+            std::cout << "error use the % operation for the data type FLOAT_NUMBER " << temp << '\n';
+            _is_not_error = false;
+            return;
+        }
+    }
     curr_term->_rpn += " " + oper->get_text();
     curr_term->_rpn = curr_term->_children[2]->_rpn + " " + curr_term->_rpn;
 }

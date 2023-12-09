@@ -1,4 +1,4 @@
-
+#include "main.h"
 #include "../parse/parser.h"
 #include "../semantic/semantic.h"
 
